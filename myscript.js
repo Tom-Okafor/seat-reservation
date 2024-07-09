@@ -34,33 +34,28 @@
         function handleSeatCreation() {
             currentRow++;
             labelRow(LEFT_SECTION);
-            for (let t = 0; t < COLUMN_ONE; t++) {
-                makeSeatsAndAttachThemInTheRightSection(LEFT_SECTION);
-            }
-            for (let t = 0; t < COLUMN_TWO; t++) {
-                makeSeatsAndAttachThemInTheRightSection(MIDDLE_SECTION);
-            }
-            for (let t = 0; t < COLUMN_THREE; t++) {
-                makeSeatsAndAttachThemInTheRightSection(RIGHT_SECTION);
-            }
+            makeSeatsAndAttachThemInTheRightSection(LEFT_SECTION, COLUMN_ONE);
+
+            makeSeatsAndAttachThemInTheRightSection(MIDDLE_SECTION, COLUMN_TWO);
+
+                makeSeatsAndAttachThemInTheRightSection(RIGHT_SECTION, COLUMN_THREE);
+            
             labelRow(RIGHT_SECTION);
             if (currentNumberOfSeats < TOTAL_NUMBER_OF_SEATS) {
                 handleSeatCreation();
             }
         }
         function labelRow(section) {
-            const NEW_ROW = document.createElement("div");
-            NEW_ROW.className = "label";
-            NEW_ROW.innerText = ROWS[currentRow];
-            section.appendChild(NEW_ROW);
+            const NEW_ROW = `<div class="label">${ROWS[currentRow]}</div>`;
+            section.insertAdjacentHTML("beforeEnd", NEW_ROW);
         }
 
-        function makeSeatsAndAttachThemInTheRightSection(section) {
-            currentNumberOfSeats++;
-            const NEW_SEAT = document.createElement("div");
-            NEW_SEAT.id = `${ROWS[currentRow]}${currentNumberOfSeats}`;
-            NEW_SEAT.innerText = currentNumberOfSeats;
-            section.appendChild(NEW_SEAT);
+        function makeSeatsAndAttachThemInTheRightSection(section, colummseats) {
+            for (let t = 0; t < colummseats; t++) {
+                currentNumberOfSeats++;
+                const NEW_SEAT = `<div class="a" id=${ROWS[currentRow]}${currentNumberOfSeats}>${currentNumberOfSeats}</div>`;
+                section.insertAdjacentHTML("beforeEnd", NEW_SEAT);
+            }
         }
 
         handleSeatCreation();
