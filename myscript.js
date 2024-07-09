@@ -4,26 +4,26 @@
         const MIDDLE_SECTION = document.getElementById("middle");
         const RIGHT_SECTION = document.getElementById("right");
         const ROWS = [
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I",
-            "J",
-            "K",
-            "L",
-            "M",
-            "N",
-            "O",
-            "P",
-            "Q",
-            "R",
-            "S",
-            "T"
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "j",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "o",
+            "q",
+            "r",
+            "s",
+            "t"
         ];
         let currentRow = 0;
         let currentNumberOfSeats = 15;
@@ -58,7 +58,7 @@
         function makeSeatsAndAttachThemInTheRightSection(section) {
             currentNumberOfSeats++;
             const NEW_SEAT = document.createElement("div");
-            NEW_SEAT.id = `a${currentNumberOfSeats}`;
+            NEW_SEAT.id = `${ROWS[currentRow]}${currentNumberOfSeats}`;
             NEW_SEAT.innerText = currentNumberOfSeats;
             section.appendChild(NEW_SEAT);
         }
