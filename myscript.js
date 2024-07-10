@@ -1,4 +1,35 @@
 (() => {
+    let reservedSeats = {
+        record1: {
+            seat: "b19",
+            owner: {
+                fname: "Joe",
+                lname: "Smith"
+            }
+        },
+        record2: {
+            seat: "b20",
+            owner: {
+                fname: "Joe",
+                lname: "Smith"
+            }
+        },
+        record3: {
+            seat: "b21",
+            owner: {
+                fname: "Joe",
+                lname: "Smith"
+            }
+        },
+        record4: {
+            seat: "b22",
+            owner: {
+                fname: "Joe",
+                lname: "Smith"
+            }
+        }
+    };
+
     function createAndAddSeats() {
         const LEFT_SECTION = document.getElementById("left");
         const MIDDLE_SECTION = document.getElementById("middle");
@@ -38,8 +69,11 @@
 
             makeSeatsAndAttachThemInTheRightSection(MIDDLE_SECTION, COLUMN_TWO);
 
-                makeSeatsAndAttachThemInTheRightSection(RIGHT_SECTION, COLUMN_THREE);
-            
+            makeSeatsAndAttachThemInTheRightSection(
+                RIGHT_SECTION,
+                COLUMN_THREE
+            );
+
             labelRow(RIGHT_SECTION);
             if (currentNumberOfSeats < TOTAL_NUMBER_OF_SEATS) {
                 handleSeatCreation();
