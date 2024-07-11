@@ -129,7 +129,25 @@
         }
     }
 
+    function displayReservationForm() {
+        const RESERVE_BUTTON = document.getElementById("reserve");
+        const RESERVE_FORM = document.getElementById("resform");
+        RESERVE_BUTTON.addEventListener("click", evt => {
+            evt.preventDefault();
+            RESERVE_FORM.style.display = "block";
+            cancelReservation();
+        });
+
+        function cancelReservation() {
+            const CANCEL_BUTTON = document.getElementById("cancel");
+            CANCEL_BUTTON.addEventListener("click", evt => {
+                evt.preventDefault();
+                RESERVE_FORM.style.display = "none";
+            });
+        }
+    }
     createAndAddSeats();
     highlightReservedSeats();
     handleSeatSelection();
+    displayReservationForm()
 })();
