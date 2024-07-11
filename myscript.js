@@ -30,6 +30,8 @@
         }
     };
 
+    SELECTED_SEATS = [];
+
     function highlightReservedSeats() {
         for (let key in reservedSeats) {
             if (reservedSeats.hasOwnProperty(key)) {
@@ -111,19 +113,22 @@
         const ALL_SEATS = document.querySelectorAll(
             "section > div:not(.label)"
         );
-        const SELECTED_SEATS = [];
+
         for (let eachSeat of ALL_SEATS) {
             eachSeat.addEventListener("click", function () {
                 const CLICKED_SEAT = document.getElementById(this.id);
                 if (CLICKED_SEAT.className == "a") {
                     SELECTED_SEATS.push(CLICKED_SEAT.id);
                     CLICKED_SEAT.className = "s";
+                    manageConfirmForm();
+                    console.log(SELECTED_SEATS.length);
                 } else if (CLICKED_SEAT.className == "s") {
                     const ITEM_POSITION = SELECTED_SEATS.indexOf(
                         CLICKED_SEAT.id
                     );
                     SELECTED_SEATS.splice(ITEM_POSITION, 1);
                     CLICKED_SEAT.className = "a";
+                    manageConfirmForm();
                 }
             });
         }
@@ -136,6 +141,7 @@
             evt.preventDefault();
             RESERVE_FORM.style.display = "block";
             cancelReservation();
+            manageConfirmForm();
         });
 
         function cancelReservation() {
@@ -146,8 +152,18 @@
             });
         }
     }
+    function manageConfirmForm() {
+        if (SELECTED_SEATS.length < 1) {
+            document.getElementById("confirmres").style.display = "none";
+            document.getElementById("selectedseats").innerHTML =
+                'You need to select some seats to reserve.<br><a href="#" id="error">Close</a> this dialog box and pick at least one seat.';
+        } else {
+            document.getElementById("confirmres").style.display = "block";
+        }
+    }
+
     createAndAddSeats();
     highlightReservedSeats();
     handleSeatSelection();
-    displayReservationForm()
+    displayReservationForm();
 })();
