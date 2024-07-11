@@ -31,21 +31,8 @@
     };
 
     function highlightReservedSeats() {
-        /*   const RESERVED_SEATS = [];
-        RESERVED_SEATS.push(reservedSeats.record1.seat);
-        RESERVED_SEATS.push(reservedSeats.record2.seat);
-        RESERVED_SEATS.push(reservedSeats.record3.seat);
-        RESERVED_SEATS.push(reservedSeats.record4.seat);
-
-        RESERVED_SEATS.forEach(eachSeat => {
-            console.log(eachSeat);
-            const SEAT = document.getElementById(`${eachSeat}`);
-            SEAT.className = "r";
-            SEAT.innerText = "R";
-        }); */
-                    for (let key in reservedSeats) {
-
-        if (reservedSeats.hasOwnProperty(key)) {
+        for (let key in reservedSeats) {
+            if (reservedSeats.hasOwnProperty(key)) {
                 const EACH_SEAT = reservedSeats[key];
                 const SEAT_ID = EACH_SEAT.seat;
                 document.getElementById(SEAT_ID).className = "r";
@@ -118,6 +105,20 @@
 
         handleSeatCreation();
     }
+
+    function handleSeatSelection() {
+        const ALL_SEATS = document.querySelectorAll(
+            "section > div:not(.label)"
+        );
+        for (let eachSeat of ALL_SEATS) {
+            eachSeat.addEventListener("click", function () {
+                const CLICKED_SEAT = document.getElementById(this.id);
+                CLICKED_SEAT.className = "s";
+            });
+        }
+    }
+
     createAndAddSeats();
     highlightReservedSeats();
+    handleSeatSelection();
 })();
