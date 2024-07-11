@@ -31,7 +31,7 @@
     };
 
     function highlightReservedSeats() {
-        const RESERVED_SEATS = [];
+        /*   const RESERVED_SEATS = [];
         RESERVED_SEATS.push(reservedSeats.record1.seat);
         RESERVED_SEATS.push(reservedSeats.record2.seat);
         RESERVED_SEATS.push(reservedSeats.record3.seat);
@@ -42,7 +42,16 @@
             const SEAT = document.getElementById(`${eachSeat}`);
             SEAT.className = "r";
             SEAT.innerText = "R";
-        });
+        }); */
+                    for (let key in reservedSeats) {
+
+        if (reservedSeats.hasOwnProperty(key)) {
+                const EACH_SEAT = reservedSeats[key];
+                const SEAT_ID = EACH_SEAT.seat;
+                document.getElementById(SEAT_ID).className = "r";
+                document.getElementById(SEAT_ID).innerText = "R";
+            }
+        }
     }
 
     function createAndAddSeats() {
@@ -110,6 +119,5 @@
         handleSeatCreation();
     }
     createAndAddSeats();
-        highlightReservedSeats();
-
+    highlightReservedSeats();
 })();
