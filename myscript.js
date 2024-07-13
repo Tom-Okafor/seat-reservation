@@ -30,7 +30,7 @@
         }
     };
 
-    const SELECTED_SEATS = [];
+    let selected_seats = [];
     const RESERVE_FORM = document.getElementById("resform");
 
     function highlightReservedSeats() {
@@ -119,15 +119,15 @@
             eachSeat.addEventListener("click", function () {
                 const CLICKED_SEAT = document.getElementById(this.id);
                 if (CLICKED_SEAT.className == "a") {
-                    SELECTED_SEATS.push(CLICKED_SEAT.id);
+                    selected_seats.push(CLICKED_SEAT.id);
                     CLICKED_SEAT.className = "s";
                     manageConfirmForm();
-                    console.log(SELECTED_SEATS.length);
+                    console.log(selected_seats.length);
                 } else if (CLICKED_SEAT.className == "s") {
-                    const ITEM_POSITION = SELECTED_SEATS.indexOf(
+                    const ITEM_POSITION = selected_seats.indexOf(
                         CLICKED_SEAT.id
                     );
-                    SELECTED_SEATS.splice(ITEM_POSITION, 1);
+                    selected_seats.splice(ITEM_POSITION, 1);
                     CLICKED_SEAT.className = "a";
                     manageConfirmForm();
                 }
@@ -153,7 +153,7 @@
         }
     }
     function manageConfirmForm() {
-        if (SELECTED_SEATS.length < 1) {
+        if (selected_seats.length < 1) {
             document.getElementById("confirmres").style.display = "none";
             document.getElementById("selectedseats").innerHTML =
                 'You need to select some seats to reserve.<br><a href="#" id="error">Close</a> this dialog box and pick at least one seat.';
@@ -163,13 +163,50 @@
             });
         } else {
             document.getElementById("confirmres").style.display = "block";
-            let pickedSeats = SELECTED_SEATS.toString();
+            let pickedSeats = selected_seats.toString();
             pickedSeats = pickedSeats.replace(/,/g, ", ");
             pickedSeats = pickedSeats.replace(/,(?=[^,]*$)/, " and");
-            document.getElementById(
-                "selectedseats"
-            ).innerHTML = `You have selected <strong>${SELECTED_SEATS.length}</strong> seats. They are seats ${pickedSeats}`;
+            if (selected_seats.length == 1) {
+                document.getElementById(
+                    "selectedseats"
+                ).innerHTML = `You have selected <strong>${selected_seats.length}</strong> seat, which is seat <strong>${pickedSeats}</strong>`;
+            } else if (selected_seats.length > 1) {
+                document.getElementById(
+                    "selectedseats"
+                ).innerHTML = `You have selected <strong>${selected_seats.length}</strong> seats. They are seats <strong>${pickedSeats}</strong>`;
+            }
         }
+    }
+
+    RESERVE_FORM.addEventListener("submit", event => {
+        event.preventDefault();
+        processReservation();
+    });
+
+    function processReservation() {
+        const RECORDS = Object.keys(reservedSeats).length;
+        const FIRSTNAME = document.getElementById("fname").value;
+        const LASTNAME = document.getElementById("lname").value;
+        let counter = 1;
+        let nextRecord = "";
+
+        selected_seats.forEach(eachSeat => {
+            document.getElementById(eachSeat).className = "r";
+            document.getElementById(eachSeat).innerText = "R";
+            const NEW_PROPERTY = `record${RECORDS + counter}`;
+            reservedSeats[NEW_PROPERTY] = {
+                seat: eachSeat,
+                owner: {
+                    fname: FIRSTNAME,
+                    lname: LASTNAME
+                }
+            };
+            counter++;
+            console.log(Object.keys(reservedSeats).length);
+            console.log(reservedSeats);
+        });
+        RESERVE_FORM.style.display = "none";
+        selected_seats = [];
     }
 
     createAndAddSeats();
