@@ -163,8 +163,12 @@
             });
         } else {
             document.getElementById("confirmres").style.display = "block";
-            document.getElementById("selectedseats").innerHTML =
-                `You have selected <strong>${SELECTED_SEATS.length}</strong> seats`;
+            let pickedSeats = SELECTED_SEATS.toString();
+            pickedSeats = pickedSeats.replace(/,/g, ", ");
+            pickedSeats = pickedSeats.replace(/,(?=[^,]*$)/, " and");
+            document.getElementById(
+                "selectedseats"
+            ).innerHTML = `You have selected <strong>${SELECTED_SEATS.length}</strong> seats. They are seats ${pickedSeats}`;
         }
     }
 
