@@ -30,7 +30,8 @@
         }
     };
 
-    SELECTED_SEATS = [];
+    const SELECTED_SEATS = [];
+    const RESERVE_FORM = document.getElementById("resform");
 
     function highlightReservedSeats() {
         for (let key in reservedSeats) {
@@ -136,7 +137,6 @@
 
     function displayReservationForm() {
         const RESERVE_BUTTON = document.getElementById("reserve");
-        const RESERVE_FORM = document.getElementById("resform");
         RESERVE_BUTTON.addEventListener("click", evt => {
             evt.preventDefault();
             RESERVE_FORM.style.display = "block";
@@ -157,8 +157,14 @@
             document.getElementById("confirmres").style.display = "none";
             document.getElementById("selectedseats").innerHTML =
                 'You need to select some seats to reserve.<br><a href="#" id="error">Close</a> this dialog box and pick at least one seat.';
+            document.getElementById("error").addEventListener("click", evt => {
+                evt.preventDefault();
+                RESERVE_FORM.style.display = "none";
+            });
         } else {
             document.getElementById("confirmres").style.display = "block";
+            document.getElementById("selectedseats").innerHTML =
+                `You have selected <strong>${SELECTED_SEATS.length}</strong> seats`;
         }
     }
 
